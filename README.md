@@ -1,1 +1,3 @@
-# animation
+# Vue 3 + Typescript + Vite
+
+收集的动画，慢慢更新中...
