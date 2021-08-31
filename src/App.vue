@@ -145,6 +145,7 @@ export default defineComponent({
       // }
       // // 其他浏览器
       // window.onmousewheel = document.onmousewheel = addEventMouse
+      document.oncontextmenu = new Function('event.returnValue=false')
     });
 
     return {
