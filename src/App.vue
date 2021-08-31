@@ -5,6 +5,9 @@
     @mouseup="handleLeave"
     @mousemove="handleMove"
     @mouseleave="handleLeave"
+    @touchstart="touchDown"
+    @touchmove="touchMove"
+    @touchend="handleLeave"
   >
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
@@ -53,6 +56,8 @@ export default defineComponent({
     // 松开或者离开视图触发事件 拖动多了仍然会触发bug 具体原因未知
     function handleLeave(e) {
       if (!movePage.moveState) return;
+      // 触发了点击事件 阻止
+      if (!movePage.positionY) return
       movePage.moveState = false;
       /**
        * @description state false加载下一页 true 上一页
@@ -102,6 +107,32 @@ export default defineComponent({
         }
       }
     }
+    // 移动端触摸事件开始
+    function touchDown(e: TouchEvent) {
+      const { clientY } = e.touches[0];
+      movePage.offsetY = clientY;
+      movePage.moveState = true;
+    }
+    // 触摸移动距离
+    function touchMove(e: TouchEvent) {
+      if (movePage.moveState) {
+        const { clientY } = e.touches[0];
+        movePage.moveOffsetY = movePage.offsetY - clientY;
+        if (
+          movePage.moveOffsetY > 0 &&
+          movePage.moveOffsetY >= windowClientHeight.value / 3
+        ) {
+          movePage.moveOffsetY = windowClientHeight.value / 3;
+        } else if (
+          movePage.moveOffsetY < 0 &&
+          movePage.moveOffsetY * -1 >= windowClientHeight.value / 3
+        ) {
+          movePage.moveOffsetY = (windowClientHeight.value / 3) * -1;
+        }
+        movePage.positionY = `${movePage.moveOffsetY * -1}px`;
+      }
+    }
+
     onMounted(() => {
       // 获取视图高度 拖拽不允许超过该高度1/3
       windowClientHeight.value = document.body.clientHeight;
@@ -122,6 +153,8 @@ export default defineComponent({
       handleLeave,
       ...toRefs(movePage),
       windowClientHeight,
+      touchDown,
+      touchMove,
     };
   },
 });

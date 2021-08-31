@@ -2,7 +2,7 @@
  * @Description: xingp，yyds
  * @Author: zaq
  * @Date: 2021-08-30 17:10:24
- * @LastEditTime: 2021-08-31 14:48:26
+ * @LastEditTime: 2021-08-31 14:59:45
  * @LastEditors: zaq
  * @Reference: 
  */
@@ -25,6 +25,10 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/star',
     component: () => import('../pages/starSky/index.vue')
+  },
+  {
+    path: '/text-shadow',
+    component: () => import('../pages/textShadow/index.vue')
   }
 ];
 
