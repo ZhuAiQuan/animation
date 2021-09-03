@@ -45,7 +45,7 @@ export default defineComponent({
       offsetY: 0,
       moveState: false,
       moveOffsetY: 0,
-      positionY: 0,
+      positionY: '0',
     });
     const windowClientHeight = ref(0);
     // 按下鼠标触发事件
@@ -57,22 +57,22 @@ export default defineComponent({
     function handleLeave(e) {
       if (!movePage.moveState) return;
       // 触发了点击事件 阻止
-      if (!movePage.positionY) return
+      // if (!+movePage.positionY) return
       movePage.moveState = false;
       /**
        * @description state false加载下一页 true 上一页
        */
       let state = false;
       movePage.moveOffsetY > 0 ? (state = false) : (state = true);
-      movePage.positionY = 0;
+      movePage.positionY = '0';
       movePage.offsetY = 0;
       movePage.moveOffsetY = 0;
+      
       routePush(state);
     }
     // 鼠标移动触发事件
     function handleMove(e: MouseEvent) {
       if (movePage.moveState) {
-        movePage.moveOffsetY = movePage.offsetY - e.offsetY;
         if (
           movePage.moveOffsetY > 0 &&
           movePage.moveOffsetY >= windowClientHeight.value / 3
@@ -83,10 +83,12 @@ export default defineComponent({
           movePage.moveOffsetY * -1 >= windowClientHeight.value / 3
         ) {
           movePage.moveOffsetY = (windowClientHeight.value / 3) * -1;
+        } else {
+          movePage.moveOffsetY = movePage.offsetY - e.offsetY
         }
         movePage.positionY = `${movePage.moveOffsetY * -1}px`;
       } else {
-        movePage.positionY = 0;
+        movePage.positionY = '0';
       }
     }
     // 页面跳转
