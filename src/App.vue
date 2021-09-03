@@ -54,7 +54,7 @@ export default defineComponent({
       movePage.moveState = true;
     }
     // 松开或者离开视图触发事件 拖动多了仍然会触发bug 具体原因未知
-    function handleLeave(e) {
+    function handleLeave() {
       if (!movePage.moveState) return;
       // 触发了点击事件 阻止
       // if (!+movePage.positionY) return
