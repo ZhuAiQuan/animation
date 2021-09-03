@@ -2,7 +2,7 @@
  * @Description: xingp，yyds
  * @Author: zaq
  * @Date: 2021-08-30 17:10:24
- * @LastEditTime: 2021-08-31 14:59:45
+ * @LastEditTime: 2021-09-03 16:09:27
  * @LastEditors: zaq
  * @Reference: 
  */
@@ -29,6 +29,10 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/text-shadow',
     component: () => import('../pages/textShadow/index.vue')
+  },
+  {
+    path: '/fog',
+    component: () => import('../pages/fog/index.vue')
   }
 ];
 
