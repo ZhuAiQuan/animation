@@ -55,10 +55,9 @@ export default defineComponent({
     }
     // 松开或者离开视图触发事件 拖动多了仍然会触发bug 具体原因未知
     function handleLeave() {
-      if (!movePage.moveState) return;
+      movePage.moveState = false
       // 触发了点击事件 阻止
-      // if (!+movePage.positionY) return
-      movePage.moveState = false;
+      if (!movePage.moveOffsetY) return
       /**
        * @description state false加载下一页 true 上一页
        */
@@ -147,7 +146,9 @@ export default defineComponent({
       // }
       // // 其他浏览器
       // window.onmousewheel = document.onmousewheel = addEventMouse
-      document.oncontextmenu = new Function('event.returnValue=false')
+      document.oncontextmenu = (e) => {
+        e.preventDefault();
+      }
     });
 
     return {
